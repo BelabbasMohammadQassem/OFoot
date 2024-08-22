@@ -110,7 +110,6 @@ class AccountController extends AbstractController
                     $user->setClub($club);
                     $entityManager->flush();
 
-                    $this->addFlash('success', 'Votre compte a été rattaché au club avec succès.');
                     return $this->redirectToRoute('app_account');
                 }
             }

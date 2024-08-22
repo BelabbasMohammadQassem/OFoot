@@ -108,7 +108,6 @@ class ClubController extends AbstractController
             $em->persist($club);
             $em->flush();
 
-            $this->addFlash('success', 'Club ajouté avec succès');
 
             return $this->redirectToRoute('app_club_read');
         }

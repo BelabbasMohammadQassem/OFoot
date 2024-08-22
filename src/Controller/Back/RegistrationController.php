@@ -52,7 +52,11 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
         // Ajout du message flash de confirmation d'inscription
-        $this->addFlash('success', 'A confirmation email has been sent to your email address. Please check your inbox to activate your account.');
+        // Ajoutez ce message flash une seule fois
+    $this->addFlash('success', 'Un courriel de confirmation a été envoyé à votre adresse électronique.');
+
+        // dd($request->getSession()->getFlashBag()->all()); // Affichera le contenu du flashbag
+
             // Redirection vers la page de d'inscription
         return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
         }

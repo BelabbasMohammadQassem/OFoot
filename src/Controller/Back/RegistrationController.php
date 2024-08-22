@@ -51,15 +51,17 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
-            // Connexion automatique de l'utilisateur après l'inscription
-            return $security->login($user, 'form_login', 'main');
+        // Ajout du message flash de confirmation d'inscription
+        $this->addFlash('Succès', 'Un courriel de confirmation a été envoyé à votre adresse électronique. Veuillez vérifier votre boîte de réception pour activer votre compte.');
+            // Redirection vers la page de d'inscription
+        return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
         }
 
         // Affichage du formulaire d'inscription
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
+        
     }
 
     // Route pour la vérification de l'email
@@ -79,6 +81,6 @@ class RegistrationController extends AbstractController
         }
 
         // Redirection après confirmation réussie
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_login');
     }
 }

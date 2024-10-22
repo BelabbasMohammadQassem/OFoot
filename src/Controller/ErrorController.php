@@ -4,50 +4,41 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 class ErrorController extends AbstractController
 {
-    private $debug;
+    private bool $debug;
 
     public function __construct(bool $debug)
     {
         $this->debug = $debug;
     }
 
-    public function show(Request $request, FlattenException $exception): Response
+    public function show(Request $request, Throwable $exception): Response
     {
-        $statusCode = $exception->getStatusCode();
-        switch ($statusCode) {
-            case 404:
-                $statusText = 'Page non trouvée';
-                break;
-            case 403:
-                $statusText = 'Accès interdit';
-                break;
-            case 500:
-                $statusText = 'Erreur interne du serveur';
-                break;
-            default:
-                $statusText = 'Une erreur est survenue';
+        // Récupérer le vrai code d'erreur
+        $statusCode = method_exists($exception, 'getStatusCode') 
+            ? $exception->getStatusCode() 
+            : Response::HTTP_INTERNAL_SERVER_ERROR;
+
+        // Si on est en mode debug et que c'est une erreur 500, on laisse Symfony gérer
+        if ($this->debug && $statusCode == 500) {
+            throw $exception;
         }
+
+        $statusText = match ($statusCode) {
+            404 => 'Page non trouvée',
+            403 => 'Accès interdit',
+            500 => 'Erreur interne du serveur',
+            default => 'Une erreur est survenue'
+        };
 
         return $this->render('error/error.html.twig', [
             'status_code' => $statusCode,
             'status_text' => $statusText,
             'exception' => $exception,
-        ]);
-    }
-
-    /**
-     * @Route("/test-error", name="app_test_error")
-     */
-    #[Route('/test-error', name: 'app_test_error')]
-    public function testError(): Response
-    {
-        throw $this->createNotFoundException();
+        ], new Response('', $statusCode));
     }
 }

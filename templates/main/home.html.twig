@@ -26,7 +26,7 @@
             <div class="carousel-inner">
                 {% for currentTournament in tournaments %}
                     <div class="carousel-item {% if loop.first %}active{% endif %}">
-                        <img src="{{ asset('/images/' ~ currentTournament.poster) }}" class="d-block carousel-image" alt="Poster du tournoi">
+                        <img src="{{ currentTournament.poster }}" class="d-block carousel-image" alt="Poster du tournoi">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>
                                 <a class="btn btn-secondary" href="{{ path('app_tournament_read', {id: currentTournament.Id}) }}" role="button">

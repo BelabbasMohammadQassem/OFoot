@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/nginx/*.conf
 /.env.local
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -20,3 +21,10 @@ import-external-repo.sh
 ###< phpunit/phpunit ###
 
 echo ".env" >> .gitignore
+
+# Configuration Nginx
+nginx_app.conf
+
+# Configuration Nginx
+/nginx/
+*.conf

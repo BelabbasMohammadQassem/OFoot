@@ -3,6 +3,7 @@
 {% block title %}Page du Tournoi{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
 
 <!-- Main Content -->
 <div class="container mt-4">

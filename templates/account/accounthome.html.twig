@@ -3,6 +3,7 @@
 {% block title %}Club index{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
 
 <!-- Main Content -->
 <div class="container my-5 flex-grow-1">

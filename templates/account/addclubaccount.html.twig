@@ -3,6 +3,8 @@
 {% block title %}Rattacher un Compte à un Club{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
+
 <div class="container mt-4 custom-contact-container">
     <div class="row">
         <div class="col text-center">

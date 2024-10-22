@@ -1,35 +1,29 @@
-
 ###> symfony/framework-bundle ###
-/nginx/*.conf
+/.env
 /.env.local
-/.env.*.local
+/.env.*
+!/.env.example
+/nginx/*.conf
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
-import-external-repo.sh
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
-echo ".env" >> .gitignore
-
-# Configuration Nginx
-nginx_app.conf
-
 # Configuration Nginx
 /nginx/
 *.conf
+nginx_app.conf
 
 # Heroku
 Procfile
 Procfile.local
 .buildpacks
+
+# Scripts
+import-external-repo.sh
